@@ -45,10 +45,6 @@ namespace ProEventos.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Teste")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("EventoId");
 
                     b.ToTable("Eventos");

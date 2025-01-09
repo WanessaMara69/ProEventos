@@ -14,5 +14,7 @@ namespace ProEventos.API.Models
         public int QntPessoas { get; set; }
         public string Lote { get; set; }
         public string ImagemURL { get; set; }
+
+        //public string TesteColuna { get; set; }
     }
 }

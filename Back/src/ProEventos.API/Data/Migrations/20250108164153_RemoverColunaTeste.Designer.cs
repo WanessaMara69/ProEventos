@@ -10,8 +10,8 @@ using ProEventos.API.Data;
 namespace ProEventos.API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250107200218_RemoverNovaColuna")]
-    partial class RemoverNovaColuna
+    [Migration("20250108164153_RemoverColunaTeste")]
+    partial class RemoverColunaTeste
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,10 +44,6 @@ namespace ProEventos.API.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Tema")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Teste")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

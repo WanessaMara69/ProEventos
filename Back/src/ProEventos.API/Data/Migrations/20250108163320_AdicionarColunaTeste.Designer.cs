@@ -10,8 +10,8 @@ using ProEventos.API.Data;
 namespace ProEventos.API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250107195827_AdicionarNovaColuna")]
-    partial class AdicionarNovaColuna
+    [Migration("20250108163320_AdicionarColunaTeste")]
+    partial class AdicionarColunaTeste
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,7 +47,7 @@ namespace ProEventos.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Teste")
+                    b.Property<string>("TesteColuna")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

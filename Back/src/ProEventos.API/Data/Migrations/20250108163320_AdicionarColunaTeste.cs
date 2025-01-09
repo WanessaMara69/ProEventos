@@ -4,12 +4,12 @@
 
 namespace ProEventos.API.Data.Migrations
 {
-    public partial class AdicionarNovaColuna : Migration
+    public partial class AdicionarColunaTeste : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Teste",
+                name: "TesteColuna",
                 table: "Eventos",
                 type: "TEXT",
                 nullable: false,
@@ -19,7 +19,7 @@ namespace ProEventos.API.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Teste",
+                name: "TesteColuna",
                 table: "Eventos");
         }
     }
