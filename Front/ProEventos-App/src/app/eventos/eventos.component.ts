@@ -12,7 +12,9 @@ import { response } from 'express';
 })
 export class EventosComponent{
 
-  public eventos: any;
+  public eventos: any = [];
+  widthImg: number = 100;
+  marginImg: number = 2;
 
   constructor(private http: HttpClient){}
 
