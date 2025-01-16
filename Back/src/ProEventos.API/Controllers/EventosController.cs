@@ -23,9 +23,12 @@ public class EventosController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public Evento GetById(int id)
+    public IActionResult GetById(int id)
     {
-        return _context.Eventos.FirstOrDefault(evento => evento.EventoId == id);
+        var evento = _context.Eventos.FirstOrDefault(evento => evento.EventoId == id);
+        if (evento == null)
+            return NotFound(new { mensagem = $"Evento com id = {id} não encontrado" });
+        return Ok(evento);
     }
 
     [HttpPost]
@@ -41,9 +44,16 @@ public class EventosController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public string Delete(int id)
+    public IActionResult Delete(int id)
     {
-        return "$Exemplo delete = {id}";
+        var evento = _context.Eventos.FirstOrDefault(evento => evento.EventoId == id);
+        if (evento == null)
+            return NotFound(new { mensagem = $"Evento com id = {id} não encontrado" });
+
+        _context.Eventos.Remove(evento);
+        _context.SaveChanges();
+
+        return Ok(new { mensagem = $"Evento com id = {id} deletado com sucesso" });
     }
 
 

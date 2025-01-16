@@ -1,21 +1,40 @@
-import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-eventos',
   standalone: true,
-  imports: [CommonModule, CollapseModule],
+  imports: [CommonModule, CollapseModule, HttpClientModule, FormsModule],
   templateUrl: './eventos.component.html',
   styleUrls: ['./eventos.component.scss'],
 })
 export class EventosComponent implements OnInit {
   public eventos: any = [];
+  public eventosFiltrados: any = [];
   larguraImagem: number = 150;
   margemImagem: number = 2;
   exibirImagem: boolean = true;
-  filtroLista: string = '';
+  private _filtroLista: string = '';
+
+   public get filtroLista(): string {
+    return this._filtroLista;
+  }
+
+  public set filtroLista(value: string) {
+    this._filtroLista = value;
+    this.eventosFiltrados = this.filtroLista ? this.filtrarEventos(this.filtroLista) : this.eventos;
+  }
+  
+  filtrarEventos(filtrarPor: string): any{
+    filtrarPor = filtrarPor.toLocaleLowerCase();
+    return this.eventos.filter(
+      (evento: { tema: string; local: string}) => evento.tema.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
+      evento.local.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+    );
+  }
 
   constructor(private http: HttpClient) {}
 
@@ -29,7 +48,10 @@ export class EventosComponent implements OnInit {
 
   public getEventos(): void {
     this.http.get('https://localhost:7274/Eventos').subscribe(
-      response => this.eventos = response,
+      response => {
+        this.eventos = response;
+        this.eventosFiltrados = this.eventos;
+      },
       error => console.log(error),
     );
   }
