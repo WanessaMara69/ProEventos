@@ -3,15 +3,24 @@
 
 <form action="" class="form-inline">
     <div class="form-group mb-2">
-       <input type="text" class="form-control mr-2" placeholder="buscar">
+       <input 
+       type="text" 
+       class="form-control mr-2" 
+       placeholder="buscar"
+       [(ngModel)]="filtroLista">
        <button class="btn btn-outline-success">buscar</button>
     </div>
 </form>
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
+            <th>
+                <button type ="button" class="btn btn-outline-light btn-sm"
+                (click)="alterarImagem()" >
+                {{!exibirImagem ? 'exibir' : 'ocultar'}}
+                </button>
+            </th>
             <th>#</th>
-            <th>Imagem</th>
             <th>Tema</th>
             <th>Local</th>
             <th>Data</th>
@@ -22,12 +31,14 @@
     </thead>
     <tbody *ngIf="eventos && eventos.length">
         <tr *ngFor="let evento of eventos">
-        <td>{{evento.eventoId}}</td>
         <td>
-            <img [src]="'/assets/' + evento.imagemURL" alt="{{evento.tema}}" 
-            [style.width.px]="widthImg"
-            [style.margin.px]="marginImg">
+            <img [collapse]="!exibirImagem"
+            [isAnimated]="true"
+            [src]="'/assets/' + evento.imagemURL" alt="{{evento.tema}}" 
+            [style.width.px]="larguraImagem"
+            [style.margin.px]="margemImagem">
         </td>
+        <td>{{evento.eventoId}}</td>
         <td>{{evento.tema}}</td>
         <td>{{evento.local}}</td>   
         <td>{{evento.dataEvento}}</td>

@@ -1,33 +1,36 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { error } from 'console';
-import { response } from 'express';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 @Component({
   selector: 'app-eventos',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, CollapseModule],
   templateUrl: './eventos.component.html',
-  styleUrl: './eventos.component.scss'
+  styleUrls: ['./eventos.component.scss'],
 })
-export class EventosComponent{
-
+export class EventosComponent implements OnInit {
   public eventos: any = [];
-  widthImg: number = 100;
-  marginImg: number = 2;
+  larguraImagem: number = 150;
+  margemImagem: number = 2;
+  exibirImagem: boolean = true;
+  filtroLista: string = '';
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {}
 
-  ngOnInit(): void{
-    this.getEventos()
+  ngOnInit(): void {
+    this.getEventos();
   }
 
-  public getEventos(): void{
+  alterarImagem() {
+    this.exibirImagem = !this.exibirImagem;
+  }
+
+  public getEventos(): void {
     this.http.get('https://localhost:7274/Eventos').subscribe(
       response => this.eventos = response,
       error => console.log(error),
     );
   }
-
-
 }
