@@ -2,8 +2,8 @@ import {
   AnimationBuilder,
   animate,
   style
-} from "./chunk-QINJ3TPD.js";
-import "./chunk-HQY25O2T.js";
+} from "./chunk-TIW7OKKY.js";
+import "./chunk-YRNQ54YV.js";
 import {
   Directive,
   ElementRef,
@@ -20,7 +20,7 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵdirectiveInject
-} from "./chunk-H74R6L4S.js";
+} from "./chunk-M6G5IQ6B.js";
 
 // node_modules/ngx-bootstrap/collapse/fesm2022/ngx-bootstrap-collapse.mjs
 var COLLAPSE_ANIMATION_TIMING = "400ms cubic-bezier(0.4,0.0,0.2,1)";
