@@ -9,6 +9,8 @@ import { DateTimeFormatPipe } from "../helpers/DateTimeFormat.pipe";
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-eventos',
@@ -16,8 +18,10 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
   imports: [CommonModule, CollapseModule, HttpClientModule, FormsModule, DateTimeFormatPipe, TooltipModule, BsDropdownModule],
   templateUrl: './eventos.component.html',
   styleUrls: ['./eventos.component.scss'],
-  providers: []
-})
+  providers: [ToastrService]
+  }
+)
+
 export class EventosComponent implements OnInit {
   modalRef!: BsModalRef;
   public eventos: Evento[] = [];
@@ -46,7 +50,7 @@ export class EventosComponent implements OnInit {
 
   constructor(
     private eventoService: EventoService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
   ) {}
 
   public ngOnInit(): void {
@@ -68,7 +72,7 @@ export class EventosComponent implements OnInit {
     this.eventoService.getEventos().subscribe(observer);
   }
 
-  openModal(template: TemplateRef<void>) {
+  openModal(template: TemplateRef<void>): void {
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
  
