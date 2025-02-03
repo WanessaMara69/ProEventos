@@ -9,7 +9,7 @@ import { DateTimeFormatPipe } from "../helpers/DateTimeFormat.pipe";
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { ToastrService } from 'ngx-toastr';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -18,7 +18,7 @@ import { ToastrService } from 'ngx-toastr';
   imports: [CommonModule, CollapseModule, HttpClientModule, FormsModule, DateTimeFormatPipe, TooltipModule, BsDropdownModule],
   templateUrl: './eventos.component.html',
   styleUrls: ['./eventos.component.scss'],
-  providers: [ToastrService]
+  providers: []
   }
 )
 
@@ -51,10 +51,12 @@ export class EventosComponent implements OnInit {
   constructor(
     private eventoService: EventoService,
     private modalService: BsModalService,
+    private snackBar: MatSnackBar,
   ) {}
 
   public ngOnInit(): void {
     this.getEventos();
+    
   }
 
   public alterarImagem(): void {
@@ -62,13 +64,17 @@ export class EventosComponent implements OnInit {
   }
 
   public getEventos(): void {
+
     const observer ={
       next: (eventos: Evento[]) => {
         this.eventos = eventos;
         this.eventosFiltrados = this.eventos;
       },
-      error: (error : any) => console.log(error)
+      error: (error : any) => {
+        console.log(error);
+      },
     };
+
     this.eventoService.getEventos().subscribe(observer);
   }
 
@@ -78,6 +84,12 @@ export class EventosComponent implements OnInit {
  
   confirm(): void {
     this.modalRef?.hide();
+    this.snackBar.open('Evento Deletado.', '', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      panelClass: ['root'],
+      
+    });
   }
  
   decline(): void {

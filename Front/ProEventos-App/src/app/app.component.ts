@@ -1,4 +1,4 @@
-import { Component, InjectionToken } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventosComponent } from './eventos/eventos.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,6 +12,8 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
+import  {  NgxSpinnerModule  }  from  'ngx-spinner' ;
+import { ToastrModule } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -29,11 +31,22 @@ import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
     TooltipModule,
     BsDropdownModule,
     ModalModule,
+    NgxSpinnerModule,
+    ToastrModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [EventoService, BsModalService]
+  providers: [EventoService, BsModalService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppComponent {
   title = 'ProEventos-App';
+  isLoading = true;
+
+  constructor(){
+    setTimeout(() => 
+    {
+      this.isLoading = false;
+    }, 1000);
+  }
 }

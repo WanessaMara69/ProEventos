@@ -1,7 +1,7 @@
 import {
   DOCUMENT,
   isPlatformBrowser
-} from "./chunk-ZATAWO2T.js";
+} from "./chunk-XCA6J4FI.js";
 import {
   ApplicationRef,
   ComponentFactoryResolver$1,
@@ -25,7 +25,7 @@ import {
   setClassMetadata,
   ɵɵdefineInjectable,
   ɵɵinject
-} from "./chunk-MG4AXEZI.js";
+} from "./chunk-WLJDLIDI.js";
 
 // node_modules/ngx-bootstrap/utils/fesm2022/ngx-bootstrap-utils.mjs
 var Trigger = class {
@@ -1439,4 +1439,4 @@ ngx-bootstrap/utils/fesm2022/ngx-bootstrap-utils.mjs:
    * found in the LICENSE file at https://angular.io/license
    *)
 */
-//# sourceMappingURL=chunk-LTVBOTQP.js.map
+//# sourceMappingURL=chunk-LKW3SJL6.js.map
