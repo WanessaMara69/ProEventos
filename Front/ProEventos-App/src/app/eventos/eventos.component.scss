@@ -1,9 +1,0 @@
-@use '@angular/material' as mat;
-
-// Customize os estilos globais
-:root {
-  @include mat.snack-bar-overrides((
-    container-color: rgb(0, 255, 98),  // Cor de fundo do snackbar
-    supporting-text-color: rgb(203, 204, 204),  // Cor do texto do snackbar
-  ));
-}

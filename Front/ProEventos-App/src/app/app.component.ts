@@ -3,7 +3,6 @@ import { EventosComponent } from './eventos/eventos.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NavegacaoComponent } from "./navegacao/navegacao.component";
-import { CollapseDirective } from 'ngx-bootstrap/collapse';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -22,12 +21,10 @@ import { ToastrModule } from 'ngx-toastr';
     CommonModule,
     HttpClientModule, 
     NavegacaoComponent,
-    CollapseModule, 
-    CollapseDirective, 
+    CollapseModule,
     EventosComponent, 
     FormsModule, 
     RouterModule, 
-    DateTimeFormatPipe,
     TooltipModule,
     BsDropdownModule,
     ModalModule,

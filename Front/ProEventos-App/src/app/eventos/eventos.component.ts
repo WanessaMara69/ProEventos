@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EventoService } from '../services/evento.service';
 import { Evento } from '../models/Evento';
@@ -15,10 +15,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-eventos',
   standalone: true,
-  imports: [CommonModule, CollapseModule, HttpClientModule, FormsModule, DateTimeFormatPipe, TooltipModule, BsDropdownModule],
+  imports: [CommonModule, CollapseModule, HttpClientModule, FormsModule, DateTimeFormatPipe, TooltipModule, 
+    BsDropdownModule],
   templateUrl: './eventos.component.html',
   styleUrls: ['./eventos.component.scss'],
-  providers: []
+  encapsulation: ViewEncapsulation.None
   }
 )
 
@@ -72,6 +73,11 @@ export class EventosComponent implements OnInit {
       },
       error: (error : any) => {
         console.log(error);
+        this.snackBar.open('❌ Erro ao carregar eventos. Tente novamente.', 'Fechar', {
+          duration: 2000,
+          horizontalPosition: 'end',
+          panelClass: ['snackbar-error'],
+        })
       },
     };
 
@@ -84,15 +90,19 @@ export class EventosComponent implements OnInit {
  
   confirm(): void {
     this.modalRef?.hide();
-    this.snackBar.open('Evento Deletado.', '', {
+    this.snackBar.open('✅ Evento deletado com sucesso.', '', {
       duration: 3000,
       horizontalPosition: 'end',
-      panelClass: ['root'],
-      
+      panelClass: ['snackbar-success']
     });
   }
  
   decline(): void {
     this.modalRef?.hide();
+    this.snackBar.open('⚠️ Evento não deletado.', '', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      panelClass: ['snackbar-warning']
+    })
   }
 }

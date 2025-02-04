@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using ProEventos.Application;
 using ProEventos.Application.Contratos;
@@ -28,7 +29,12 @@ namespace ProEventos.API
             services.AddScoped<IEventoService, EventoService>();
             services.AddScoped<IGeralPersist, GeralPersist>();
             services.AddScoped<IEventoPersist, EventoPersist>();
-            services.AddCors();
+            services.AddCors(Options => {
+                Options.AddPolicy("AllowAll",
+                policy => policy.AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader());
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProEventos.API", Version = "v1" });
@@ -51,9 +57,7 @@ namespace ProEventos.API
 
             app.UseAuthorization();
 
-            app.UseCors(x => x.AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowAnyOrigin());
+            app.UseCors("AllowAll");
 
             app.UseEndpoints(endpoints =>
             {
