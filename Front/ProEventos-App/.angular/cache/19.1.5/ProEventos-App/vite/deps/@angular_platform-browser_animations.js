@@ -7,12 +7,12 @@ import {
   WebAnimationsDriver,
   WebAnimationsStyleNormalizer
 } from "./chunk-H63PDNRY.js";
-import "./chunk-BM7ZGC6U.js";
 import {
   BrowserModule,
   DomRendererFactory2
 } from "./chunk-VO4OK62Q.js";
 import "./chunk-TMUTU42Y.js";
+import "./chunk-BM7ZGC6U.js";
 import {
   DOCUMENT
 } from "./chunk-XCA6J4FI.js";

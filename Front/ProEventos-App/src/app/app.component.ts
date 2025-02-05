@@ -2,7 +2,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventosComponent } from './components/eventos/eventos.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { NavegacaoComponent } from "./navegacao/navegacao.component";
+import { NavegacaoComponent } from "./shared/navegacao/navegacao.component";
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -23,6 +23,7 @@ import { TituloComponent } from './shared/titulo/titulo.component';
     CommonModule,
     HttpClientModule, 
     NavegacaoComponent,
+    RouterModule,
     CollapseModule,
     EventosComponent,
     PalestrantesComponent,

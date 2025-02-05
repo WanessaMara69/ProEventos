@@ -12,6 +12,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { provideRouter, RouterModule } from '@angular/router';
+import { routes } from './app/app.routes';
 
 
 // Configuração dos providers
@@ -20,6 +22,7 @@ bootstrapApplication(AppComponent, {
     provideAnimations(),
     provideHttpClient(withFetch()),
     provideToastr(),
+    provideRouter(routes),
     importProvidersFrom(
       CommonModule,
       CollapseModule.forRoot(),

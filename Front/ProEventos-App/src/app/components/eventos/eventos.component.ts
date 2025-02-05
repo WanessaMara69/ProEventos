@@ -74,8 +74,8 @@ export class EventosComponent implements OnInit {
       },
       error: (error : any) => {
         console.log(error);
-        this.snackBar.open('❌ Erro ao carregar eventos. Tente novamente.', 'Fechar', {
-          duration: 2000,
+        this.snackBar.open('❌ Erro ao carregar eventos. Tente novamente.', '', {
+          duration: 3000,
           horizontalPosition: 'end',
           panelClass: ['snackbar-error'],
         })
