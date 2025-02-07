@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TituloComponent } from "../../shared/titulo/titulo.component";
+import { TituloComponent } from '../../../shared/titulo/titulo.component';
 
 @Component({
   selector: 'app-perfil',
@@ -8,6 +8,7 @@ import { TituloComponent } from "../../shared/titulo/titulo.component";
   imports: [TituloComponent]
 })
 export class PerfilComponent implements OnInit {
+  [x: string]: any;
 
   constructor() { }
 

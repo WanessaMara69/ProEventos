@@ -1,0 +1,78 @@
+.form-signin {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    margin: 50px auto;
+    box-sizing: border-box;
+}
+
+/* Ícone */
+.form-signin i {
+    font-size: 50px;
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Checkbox */
+.form-signin .checkbox {
+    font-weight: 400;
+}
+
+/* Estilização dos campos de entrada */
+.form-signin .form-control {
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    box-sizing: border-box;
+    background: white; /* Mantém fundo branco apenas para os inputs */
+}
+
+/* Efeito ao focar */
+.form-signin .form-control:focus {
+    z-index: 2;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Ajustes para os inputs */
+.form-signin input[type="email"] {
+    margin-bottom: 10px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+/* Botão de envio */
+.form-signin button {
+    width: 100%;
+    height: 45px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.form-signin button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 576px) {
+    .form-signin {
+        max-width: 90%;
+        padding: 15px;
+    }
+}

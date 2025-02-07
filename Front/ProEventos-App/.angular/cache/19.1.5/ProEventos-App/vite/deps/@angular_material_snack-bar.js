@@ -1,4 +1,11 @@
 import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from "./chunk-BM7ZGC6U.js";
+import {
   BidiModule,
   BreakpointObserver,
   Breakpoints,
@@ -24,13 +31,6 @@ import {
   hasModifierKey,
   supportsScrollBehavior
 } from "./chunk-GGZUSSUT.js";
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-} from "./chunk-BM7ZGC6U.js";
 import {
   DOCUMENT,
   Location

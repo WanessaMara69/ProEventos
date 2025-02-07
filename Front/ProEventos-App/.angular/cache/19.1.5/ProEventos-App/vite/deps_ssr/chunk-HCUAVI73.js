@@ -1,5 +1,14 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
+  AUTO_STYLE,
+  AnimationGroupPlayer,
+  AnimationMetadataType,
+  NoopAnimationPlayer,
+  sequence,
+  style,
+  ɵPRE_STYLE
+} from "./chunk-MDDTTKC7.js";
+import {
   BrowserDomAdapter,
   BrowserModule,
   DomRendererFactory2,
@@ -9,15 +18,6 @@ import {
 import {
   HTTP_ROOT_INTERCEPTOR_FNS
 } from "./chunk-RSDZCMNU.js";
-import {
-  AUTO_STYLE,
-  AnimationGroupPlayer,
-  AnimationMetadataType,
-  NoopAnimationPlayer,
-  sequence,
-  style,
-  ɵPRE_STYLE
-} from "./chunk-MDDTTKC7.js";
 import {
   DOCUMENT,
   NullViewportScroller,
@@ -21148,4 +21148,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-4CY4CQ5T.js.map
+//# sourceMappingURL=chunk-HCUAVI73.js.map

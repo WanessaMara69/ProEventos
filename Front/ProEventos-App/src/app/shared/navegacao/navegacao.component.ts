@@ -1,19 +1,26 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-navegacao',
   templateUrl: './navegacao.component.html',
   styleUrls: ['./navegacao.component.css'],
-  imports: [RouterLink]
+  imports: [RouterLink, CommonModule]
 })
 export class NavegacaoComponent implements OnInit {
 
   isCollapsed = true;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+  }
+
+  showMenu() : boolean{
+    return this.router.url != '/user/login'; 
   }
 }

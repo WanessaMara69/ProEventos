@@ -2,6 +2,7 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import '../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css';
 @import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+@import '../node_modules/bootswatch/dist/cosmo/bootstrap.min.css';
 
 
 html, body { height: 100%; }
@@ -50,5 +51,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --mdc-snackbar-supporting-text-color: white !important; /* Texto branco */
   font-weight: bold;
   text-align: center;
+}
+
+.icon-small {
+  font-size: 16px; 
+  width: 10px; /* Define um tamanho fixo */
+  text-align: center;
+}
+.btn i {  
+  margin-right: 6px; /* Reduz a margem entre o ícone e o texto */
 }
 
