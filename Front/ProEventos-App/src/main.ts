@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { provideRouter, RouterLink, RouterModule } from '@angular/router';
 import { routes } from './app/app.routes';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 // Configuração dos providers
@@ -33,6 +34,8 @@ bootstrapApplication(AppComponent, {
       MatSnackBar,
       MatSnackBarModule,
       RouterLink,
+      FormsModule,
+      ReactiveFormsModule,
     ), provideAnimationsAsync(),
   ],
 }).catch((err) => console.error(err));

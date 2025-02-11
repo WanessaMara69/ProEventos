@@ -16,12 +16,12 @@ import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-evento-lista',
   imports: [CommonModule, CollapseModule, HttpClientModule, FormsModule, DateTimeFormatPipe, TooltipModule,
-      BsDropdownModule, TituloComponent, RouterLink],
+      BsDropdownModule, RouterLink],
   templateUrl: './evento-lista.component.html',
   styleUrl: './evento-lista.component.scss'
 })
 export class EventoListaComponent implements OnInit {
-[x: string]: any;
+  [x: string]: any;
   modalRef!: BsModalRef;
   public eventos: Evento[] = [];
   public eventosFiltrados: Evento[] = [];

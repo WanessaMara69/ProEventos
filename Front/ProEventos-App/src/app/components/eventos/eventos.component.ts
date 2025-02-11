@@ -17,7 +17,7 @@ import { RouterLink, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-eventos',
   standalone: true,
-  imports: [CommonModule, CollapseModule, HttpClientModule, FormsModule, DateTimeFormatPipe, TooltipModule,
+  imports: [CommonModule, CollapseModule, HttpClientModule, FormsModule, TooltipModule,
     BsDropdownModule, TituloComponent, RouterModule],
   templateUrl: './eventos.component.html',
   styleUrls: ['./eventos.component.scss'],
