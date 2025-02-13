@@ -28,6 +28,7 @@ export class EventoListaComponent implements OnInit {
   public larguraImagem: number = 150;
   public margemImagem: number = 2;
   public exibirImagem: boolean = true;
+  public eventoId: number = 0;
   private _filtroLista: string = '';
 
   public get filtroLista(): string {
@@ -55,7 +56,7 @@ export class EventoListaComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.getEventos();
+    this.carregarEventos();
     
   }
 
@@ -63,7 +64,7 @@ export class EventoListaComponent implements OnInit {
     this.exibirImagem = !this.exibirImagem;
   }
 
-  public getEventos(): void {
+  public carregarEventos(): void {
 
     const observer ={
       next: (eventos: Evento[]) => {
@@ -83,18 +84,38 @@ export class EventoListaComponent implements OnInit {
     this.eventoService.getEventos().subscribe(observer);
   }
 
-  openModal(template: TemplateRef<void>): void {
+  openModal(event: any, template: TemplateRef<any>, eventoId: number): void {
+    event.stopPropagation();
+    this.eventoId = eventoId;
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
  
   confirm(): void {
     this.modalRef?.hide();
-    this.snackBar.open('✅ Evento deletado com sucesso.', '', {
-      duration: 3000,
-      horizontalPosition: 'end',
-      panelClass: ['snackbar-success']
-    });
+    this.eventoService.deleteEvento(this.eventoId).subscribe(
+      () => {
+        this.snackBar.open('✅ Evento deletado com sucesso.', '', {
+          duration: 3000,
+          horizontalPosition: 'end',
+          panelClass: ['snackbar-success']
+        });
+  
+        // Aguarde um pequeno tempo antes de recarregar eventos
+        setTimeout(() => {
+          this.carregarEventos();
+        }, 500);
+      },
+      (error: any) => {
+        console.log(error);
+        this.snackBar.open(`❌ Erro ao tentar deletar o evento ${this.eventoId}.`, '', {
+          duration: 3000,
+          horizontalPosition: 'end',
+          panelClass: ['snackbar-error'],
+        });
+      }
+    );
   }
+  
  
   decline(): void {
     this.modalRef?.hide();

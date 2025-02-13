@@ -15,6 +15,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { provideRouter, RouterLink, RouterModule } from '@angular/router';
 import { routes } from './app/app.routes';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 // Configuração dos providers
@@ -29,6 +30,7 @@ bootstrapApplication(AppComponent, {
       CollapseModule.forRoot(),
       TooltipModule.forRoot(),
       BsDropdownModule.forRoot(),
+      BsDatepickerModule.forRoot(),
       BrowserAnimationsModule,
       MatProgressSpinnerModule,
       MatSnackBar,
