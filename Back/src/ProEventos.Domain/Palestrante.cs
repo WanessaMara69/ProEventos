@@ -1,7 +1,7 @@
 
 namespace ProEventos.Domain
 {
-    public class Palestrantes
+    public class Palestrante
     {
         public int Id { get; set; }
         public string Nome { get; set; }

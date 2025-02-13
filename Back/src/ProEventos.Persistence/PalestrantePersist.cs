@@ -15,9 +15,9 @@ namespace ProEventos.Persistence
             _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        public async Task<Palestrantes[]> GetAllPalestrantesByNomeAsync(string nome, bool includeEventos = false)
+        public async Task<Palestrante[]> GetAllPalestrantesByNomeAsync(string nome, bool includeEventos = false)
         {
-            IQueryable<Palestrantes> query = _context.Palestrantes
+            IQueryable<Palestrante> query = _context.Palestrantes
                      .Include(p => p.RedesSociais);
 
             if (includeEventos)
@@ -33,9 +33,9 @@ namespace ProEventos.Persistence
             return await query.ToArrayAsync();
         }
 
-        public async Task<Palestrantes[]> GetAllPalestrantesAsync(bool includeEventos = false)
+        public async Task<Palestrante[]> GetAllPalestrantesAsync(bool includeEventos = false)
         {
-            IQueryable<Palestrantes> query = _context.Palestrantes
+            IQueryable<Palestrante> query = _context.Palestrantes
                  .Include(p => p.RedesSociais);
 
             if (includeEventos)
@@ -49,9 +49,9 @@ namespace ProEventos.Persistence
             return await query.ToArrayAsync();
         }
 
-        public async Task<Palestrantes> GetPalestranteByIdAsync(int palestranteId, bool includeEventos = false)
+        public async Task<Palestrante> GetPalestranteByIdAsync(int palestranteId, bool includeEventos = false)
         {
-            IQueryable<Palestrantes> query = _context.Palestrantes
+            IQueryable<Palestrante> query = _context.Palestrantes
                    .Include(p => p.RedesSociais);
 
             if (includeEventos)

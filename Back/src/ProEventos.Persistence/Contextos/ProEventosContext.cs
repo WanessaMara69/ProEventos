@@ -14,7 +14,7 @@ namespace ProEventos.Persistence.Contextos
         public ProEventosContext(DbContextOptions<ProEventosContext> options) : base(options) { }
         public DbSet<Evento> Eventos { get; set; }
         public DbSet<Lote> Lotes { get; set; }
-        public DbSet<Palestrantes> Palestrantes { get; set; }
+        public DbSet<Palestrante> Palestrantes { get; set; }
         public DbSet<RedeSocial> RedesSocials { get; set; }
         public DbSet<PalestranteEvento> PalestrantesEventos { get; set; }
 
@@ -27,7 +27,7 @@ namespace ProEventos.Persistence.Contextos
                 .WithOne(rs => rs.Evento)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Palestrantes>()
+            modelBuilder.Entity<Palestrante>()
                 .HasMany(p => p.RedesSociais)
                 .WithOne(rs => rs.Palestrante)
                 .OnDelete(DeleteBehavior.Cascade);

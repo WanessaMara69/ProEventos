@@ -12,6 +12,6 @@ namespace ProEventos.Domain
 
         public int? PalestranteId { get; set; }
 
-        public Palestrantes Palestrante { get; set; }  
+        public Palestrante Palestrante { get; set; }  
     }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TituloComponent } from '../../../shared/titulo/titulo.component';
-import { RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ValidationField } from '../../../helpers/ValidatorField';
