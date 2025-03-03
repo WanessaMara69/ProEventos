@@ -43,9 +43,5 @@ export class AppComponent {
   isLoading = true;
 
   constructor(){
-    setTimeout(() => 
-    {
-      this.isLoading = false;
-    }, 1000);
   }
 }

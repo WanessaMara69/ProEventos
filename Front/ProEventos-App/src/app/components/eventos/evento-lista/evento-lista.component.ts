@@ -10,43 +10,36 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { DateTimeFormatPipe } from '../../../helpers/DateTimeFormat.pipe';
-import { TituloComponent } from '../../../shared/titulo/titulo.component';
 import { Router, RouterLink } from '@angular/router';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-evento-lista',
-  imports: [CommonModule, CollapseModule, HttpClientModule, FormsModule, DateTimeFormatPipe, TooltipModule,
-      BsDropdownModule, RouterLink],
+  standalone: true,
+  imports: [
+    CommonModule, 
+    CollapseModule, 
+    HttpClientModule, 
+    MatProgressSpinner, 
+    FormsModule, 
+    DateTimeFormatPipe, 
+    TooltipModule,
+    BsDropdownModule, 
+    RouterLink
+  ],
   templateUrl: './evento-lista.component.html',
-  styleUrl: './evento-lista.component.scss'
+  styleUrls: ['./evento-lista.component.scss']
 })
 export class EventoListaComponent implements OnInit {
-  [x: string]: any;
   modalRef!: BsModalRef;
   public eventos: Evento[] = [];
   public eventosFiltrados: Evento[] = [];
-  public larguraImagem: number = 150;
-  public margemImagem: number = 2;
-  public exibirImagem: boolean = true;
-  public eventoId: number = 0;
-  private _filtroLista: string = '';
-
-  public get filtroLista(): string {
-    return this._filtroLista;
-  }
-
-  public set filtroLista(value: string) {
-    this._filtroLista = value;
-    this.eventosFiltrados = this.filtroLista ? this.filtrarEventos(this.filtroLista) : this.eventos;
-  }
-  
-  public filtrarEventos(filtrarPor: string): Evento[]{
-    filtrarPor = filtrarPor.toLocaleLowerCase();
-    return this.eventos.filter(
-      (evento: { tema: string; local: string}) => evento.tema.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
-      evento.local.toLocaleLowerCase().indexOf(filtrarPor) !== -1
-    );
-  }
+  public larguraImagem = 150;
+  public margemImagem = 2;
+  public exibirImagem = true;
+  public eventoId = 0;
+  private _filtroLista = '';
+  isLoading = false;
 
   constructor(
     private eventoService: EventoService,
@@ -55,36 +48,52 @@ export class EventoListaComponent implements OnInit {
     private router: Router
   ) {}
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.carregarEventos();
-    
   }
 
-  public alterarImagem(): void {
+  get filtroLista(): string {
+    return this._filtroLista;
+  }
+
+  set filtroLista(value: string) {
+    this._filtroLista = value;
+    this.eventosFiltrados = this.filtroLista ? this.filtrarEventos(this.filtroLista) : this.eventos;
+  }
+
+  filtrarEventos(filtrarPor: string): Evento[] {
+    filtrarPor = filtrarPor.toLowerCase();
+    return this.eventos.filter(
+      (evento) => evento.tema.toLowerCase().includes(filtrarPor) || evento.local.toLowerCase().includes(filtrarPor)
+    );
+  }
+
+  alterarImagem(): void {
     this.exibirImagem = !this.exibirImagem;
   }
 
-  public carregarEventos(): void {
-
-    const observer ={
+  carregarEventos(): void {
+    this.isLoading = true;
+    this.eventoService.getEventos().subscribe({
       next: (eventos: Evento[]) => {
         this.eventos = eventos;
-        this.eventosFiltrados = this.eventos;
+        this.eventosFiltrados = [...this.eventos];
       },
-      error: (error : any) => {
-        console.log(error);
+      error: (error: any) => {
+        console.error(error);
         this.snackBar.open('❌ Erro ao carregar eventos. Tente novamente.', '', {
           duration: 3000,
           horizontalPosition: 'end',
           panelClass: ['snackbar-error'],
-        })
+        });
       },
-    };
-
-    this.eventoService.getEventos().subscribe(observer);
+      complete: () => {
+        this.isLoading = false;
+      }
+    });
   }
 
-  openModal(event: any, template: TemplateRef<any>, eventoId: number): void {
+  openModal(event: Event, template: TemplateRef<any>, eventoId: number): void {
     event.stopPropagation();
     this.eventoId = eventoId;
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
@@ -92,42 +101,43 @@ export class EventoListaComponent implements OnInit {
  
   confirm(): void {
     this.modalRef?.hide();
-    this.eventoService.deleteEvento(this.eventoId).subscribe(
-      () => {
+    this.isLoading = true;
+  
+    this.eventoService.deleteEvento(this.eventoId).subscribe({
+      next: () => {
+        this.eventos = this.eventos.filter(evento => evento.id !== this.eventoId);
+        this.eventosFiltrados = [...this.eventos];
+  
         this.snackBar.open('✅ Evento deletado com sucesso.', '', {
-          duration: 3000,
+          duration: 5000,
           horizontalPosition: 'end',
           panelClass: ['snackbar-success']
         });
-  
-        // Aguarde um pequeno tempo antes de recarregar eventos
-        setTimeout(() => {
-          this.carregarEventos();
-        }, 500);
       },
-      (error: any) => {
-        console.log(error);
-        this.snackBar.open(`❌ Erro ao tentar deletar o evento ${this.eventoId}.`, '', {
-          duration: 3000,
+      error: (error) => {
+        console.error(error);
+        this.snackBar.open(`❌ Erro ao tentar deletar o evento: ${error.message}`, '', {
+          duration: 5000,
           horizontalPosition: 'end',
-          panelClass: ['snackbar-error'],
+          panelClass: ['snackbar-error']
         });
+      },
+      complete: () => {
+        this.isLoading = false;
       }
-    );
+    });
   }
-  
  
   decline(): void {
     this.modalRef?.hide();
-    this.snackBar.open('⚠️ Evento não deletado.', '', {
+    this.snackBar.open('Evento não deletado.', '', {
       duration: 3000,
       horizontalPosition: 'end',
-      panelClass: ['snackbar-warning']
-    })
+      panelClass: ['snackbar-info']
+    });
   }
 
-  detalheEvento(id : number): void{
+  detalheEvento(id: number): void {
     this.router.navigate([`eventos/detalhe/${id}`]);
   }
-
 }

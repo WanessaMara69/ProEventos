@@ -1,1 +1,9 @@
-<app-titulo [titulo]="'Dashboard'"></app-titulo>
+<!-- Spinner de carregamento -->
+<div *ngIf="isLoading" class="loading-container">
+    <mat-spinner color="primary"></mat-spinner>
+    <div class="loading-text">Carregando...</div> <!-- Frase "Carregando..." -->
+  </div>
+  
+  <!-- Conteúdo principal -->
+  <app-titulo [titulo]="'Dashboard'"></app-titulo>
+  

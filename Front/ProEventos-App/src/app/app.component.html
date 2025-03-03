@@ -4,7 +4,7 @@
   <router-outlet></router-outlet> 
 </div>
 
-<div class="loading-container" *ngIf="isLoading">
+<!-- Spinner de carregamento -->
+<div *ngIf="isLoading" class="loading-container">
   <mat-spinner color="primary"></mat-spinner>
-  <div class="loading-text">Carregando...</div>
 </div>

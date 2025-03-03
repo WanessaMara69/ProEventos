@@ -2,40 +2,42 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BsDatepickerModule, BsLocaleService } from 'ngx-bootstrap/datepicker';
-
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EventoService } from '../../../services/evento.service';
 import { Evento } from '../../../models/Evento';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 defineLocale('pt-br', ptBrLocale);
 
 @Component({
   selector: 'app-evento-detalhe',
-  imports: [ReactiveFormsModule, CommonModule, BsDatepickerModule],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule, BsDatepickerModule, RouterLink, MatProgressSpinner],
   templateUrl: './evento-detalhe.component.html',
   styleUrl: './evento-detalhe.component.scss',
 })
-export class EventoDetalheComponent implements OnInit{
-
+export class EventoDetalheComponent implements OnInit {
   evento = {} as Evento;
   form!: FormGroup;
   isAnimated = true;
   adaptivePosition = true;
+  isLoading: boolean = false; // Adicionando a variável isLoading
 
-  get f(): any{
+  get f(): any {
     return this.form.controls;
   }
 
-  get bsConfig(): any{
-    return {isAnimated: true, 
-      containerClass: 'theme-default', 
-      adaptivePosition: true, 
+  get bsConfig(): any {
+    return {
+      isAnimated: true,
+      containerClass: 'theme-default',
+      adaptivePosition: true,
       dateInputFormat: 'DD/MM/YYYY HH:mm a',
-      showWeekNumbers: false};  
+      showWeekNumbers: false,
+    };
   }
 
   constructor(
@@ -43,28 +45,29 @@ export class EventoDetalheComponent implements OnInit{
     private localeService: BsLocaleService,
     private router: ActivatedRoute,
     private eventoService: EventoService,
-    private snackBar: MatSnackBar,
-    )
-    {
-      this.localeService.use('pt-br');
-    }
-  
+    private snackBar: MatSnackBar
+  ) {
+    this.localeService.use('pt-br');
+  }
+
   ngOnInit(): void {
     this.carregarEvento();
     this.validation();
-      
   }
 
-  public carregarEvento(): void{
-    const eventoIdParam = this.router.snapshot.paramMap.get('id');
+  public carregarEvento(): void {
+    this.isLoading = true; // Inicia o carregamento
 
-    if(eventoIdParam !== null){
+    const eventoIdParam = this.router.snapshot.paramMap.get('id');
+    if (eventoIdParam !== null) {
       this.eventoService.getEventoById(+eventoIdParam).subscribe({
         next: (evento: Evento) => {
-          this.evento = {...evento};
+          this.evento = { ...evento };
           this.form.patchValue(this.evento);
+          this.isLoading = false; // Finaliza o carregamento
         },
         error: (error: any) => {
+          this.isLoading = false; // Finaliza o carregamento em caso de erro
           this.snackBar.open('❌ Erro ao tentar carregar eventos.', '', {
             duration: 3000,
             horizontalPosition: 'end',
@@ -72,13 +75,41 @@ export class EventoDetalheComponent implements OnInit{
           });
           console.error(error);
         },
-        complete: () => {},
-    });
-
+      });
+    } else {
+      this.isLoading = false;
     }
   }
 
-  public validation(): void{
+  public salvarAlteracao(): void {
+    if (this.form.valid) {
+      this.isLoading = true; // Inicia o carregamento
+
+      const eventoAtualizado: Evento = { ...this.form.value, id: this.evento.id };
+
+      this.eventoService.postEvento(eventoAtualizado).subscribe({
+        next: () => {
+          this.snackBar.open('✅ Evento atualizado com sucesso!', '', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            panelClass: ['snackbar-success'],
+          });
+          this.isLoading = false; // Finaliza o carregamento
+        },
+        error: (error: any) => {
+          this.snackBar.open('❌ Erro ao tentar salvar o evento.', '', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            panelClass: ['snackbar-error'],
+          });
+          console.error(error);
+          this.isLoading = false; // Finaliza o carregamento
+        },
+      });
+    }
+  }
+
+  public validation(): void {
     this.form = this.fb.group({
       local: ['', Validators.required],
       tema: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
@@ -90,14 +121,11 @@ export class EventoDetalheComponent implements OnInit{
     });
   }
 
-  public resetForm(): void{
+  public resetForm(): void {
     this.form.reset();
   }
 
-  public cssValidator(campoForm: FormControl): any{
-    return {'is-invalid' : campoForm.errors && campoForm.touched};
+  public cssValidator(campoForm: FormControl): any {
+    return { 'is-invalid': campoForm.errors && campoForm.touched };
   }
-
-
-
 }
