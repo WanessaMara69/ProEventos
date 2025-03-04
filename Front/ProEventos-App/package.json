@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "^19.1.1",
     "@angular/platform-server": "^19.1.1",
     "@angular/router": "^19.1.1",
-    "@angular/ssr": "^19.1.1",
+    "@angular/ssr": "^19.2.0",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@ng-bootstrap/ng-bootstrap": "^18.0.0",
     "bootstrap": "^4.6.2",
@@ -36,8 +36,8 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.1.1",
-    "@angular/cli": "^19.1.1",
+    "@angular-devkit/build-angular": "^19.2.0",
+    "@angular/cli": "^19.2.0",
     "@angular/compiler-cli": "^19.1.1",
     "@types/babel__core": "^7.20.5",
     "@types/babel__generator": "^7.6.8",
