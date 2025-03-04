@@ -3,15 +3,10 @@ import { CommonModule } from '@angular/common';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { Component, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { EventoService } from '../../services/evento.service';
-import { Evento } from '../../models/Evento';
-import { DateTimeFormatPipe } from "../../helpers/DateTimeFormat.pipe";
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { TituloComponent } from "../../shared/titulo/titulo.component";
-import { RouterLink, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
@@ -26,5 +21,8 @@ import { RouterLink, RouterModule } from '@angular/router';
 )
 
 export class EventosComponent implements OnInit {
+
+  isLoading = false;
+
   ngOnInit(): void { }
 }

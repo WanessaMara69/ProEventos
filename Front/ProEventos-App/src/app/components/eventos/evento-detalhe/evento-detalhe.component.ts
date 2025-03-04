@@ -15,7 +15,7 @@ defineLocale('pt-br', ptBrLocale);
 @Component({
   selector: 'app-evento-detalhe',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, BsDatepickerModule, RouterLink, MatProgressSpinner],
+  imports: [ReactiveFormsModule, CommonModule, BsDatepickerModule, MatProgressSpinner],
   templateUrl: './evento-detalhe.component.html',
   styleUrl: './evento-detalhe.component.scss',
 })

@@ -11,7 +11,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { DateTimeFormatPipe } from '../../../helpers/DateTimeFormat.pipe';
 import { Router, RouterLink } from '@angular/router';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar'; // Importe o MatProgressBarModule
 
 @Component({
   selector: 'app-evento-lista',
@@ -20,13 +20,12 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     CommonModule, 
     CollapseModule, 
     HttpClientModule, 
-    MatProgressSpinner, 
+    MatProgressBarModule, 
     FormsModule, 
     DateTimeFormatPipe, 
     TooltipModule,
     BsDropdownModule, 
-    RouterLink
-  ],
+    RouterLink,  ],
   templateUrl: './evento-lista.component.html',
   styleUrls: ['./evento-lista.component.scss']
 })
@@ -40,6 +39,7 @@ export class EventoListaComponent implements OnInit {
   public eventoId = 0;
   private _filtroLista = '';
   isLoading = false;
+  isLoadingBar = false;
 
   constructor(
     private eventoService: EventoService,
@@ -73,7 +73,7 @@ export class EventoListaComponent implements OnInit {
   }
 
   carregarEventos(): void {
-    this.isLoading = true;
+    this.isLoadingBar = true; // Inicia a barra de progresso
     this.eventoService.getEventos().subscribe({
       next: (eventos: Evento[]) => {
         this.eventos = eventos;
@@ -81,17 +81,14 @@ export class EventoListaComponent implements OnInit {
       },
       error: (error: any) => {
         console.error(error);
-        this.snackBar.open('❌ Erro ao carregar eventos. Tente novamente.', '', {
-          duration: 3000,
-          horizontalPosition: 'end',
-          panelClass: ['snackbar-error'],
-        });
+        this.snackBar.open('❌ Erro ao carregar eventos.', '', { duration: 3000 });
       },
       complete: () => {
-        this.isLoading = false;
+        this.isLoadingBar = false; // Finaliza a barra de progresso
       }
     });
   }
+  
 
   openModal(event: Event, template: TemplateRef<any>, eventoId: number): void {
     event.stopPropagation();

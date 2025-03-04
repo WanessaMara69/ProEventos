@@ -29,7 +29,8 @@ export class EventoService {
     return this.http.put<Evento>(`${this.baseURL}/${id}`, evento);
   }
   
-  public deleteEvento(id: number): Observable<string>{
-    return this.http.delete<string>(`${this.baseURL}/${id}`);
+  public deleteEvento(id: number): Observable<string> {
+    return this.http.delete(`${this.baseURL}/${id}`, { responseType: 'text' });
   }
+  
 }

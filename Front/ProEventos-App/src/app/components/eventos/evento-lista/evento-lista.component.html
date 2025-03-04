@@ -1,84 +1,95 @@
-
 <div class="card rounded shadow-sm p-3">
     <div class="d-flex">
-        <!-- Barra de Filtros -->
-        <div class="flex-fill pr-3">
-            <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Filtro: </div>
-                </div>
-                <input 
-                    type="text" 
-                    class="form-control" 
-                    placeholder="Filtrar por Tema e Local"
-                    [(ngModel)]="filtroLista">
-            </div>
+      <!-- Barra de Filtros -->
+      <div class="flex-fill pr-3">
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text">Filtro: </div>
+          </div>
+          <input 
+            type="text" 
+            class="form-control" 
+            placeholder="Filtrar por Tema e Local"
+            [(ngModel)]="filtroLista">
         </div>
-
-        <!-- Botão Novo -->
-        <div class="ml-2">
-            <a class="d-inline-flex align-items-center btn btn-outline-primary"
-                style="height: calc(2.25rem + 2px);" routerLink="/eventos/detalhe">
-                <i class="fa fa-plus-circle icon-small ml-0"></i>
-                <span class="ml-1 d-none d-sm-block">Novo</span>
-            </a>
-        </div>
+      </div>
+  
+      <!-- Botão Novo -->
+      <div class="ml-2">
+        <a class="d-inline-flex align-items-center btn btn-outline-primary"
+          style="height: calc(2.25rem + 2px);" routerLink="/eventos/detalhe">
+          <i class="fa fa-plus-circle icon-small ml-0"></i>
+          <span class="ml-1 d-none d-sm-block">Novo</span>
+        </a>
+      </div>
     </div>
-
+  
+    <!-- Barra de progresso de carregamento -->
+    <mat-progress-bar *ngIf="isLoadingBar" mode="indeterminate"></mat-progress-bar>
+  
     <!-- Tabela -->
     <table class="table table-striped table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th class="d-none d-md-table-cell">
-                    <button type="button" class="btn btn-outline-light btn-sm"
-                    (click)="alterarImagem()">
-                    <i class=" {{!exibirImagem ? 'fa fa-eye' : 'fa fa-eye-slash'}} icon-small ml-0 mr-3"></i>
-                    {{!exibirImagem ? 'exibir' : 'ocultar'}}
-                    </button>
-                </th>
-                <th>#</th>
-                <th>Tema</th>
-                <th class="d-none d-md-table-cell">Local</th>
-                <th>Data</th>
-                <th class="d-none d-md-table-cell">Qnt Pessoas</th>
-                <th class="d-none d-md-table-cell">Lote</th>
-                <th>Opções</th>
-            </tr>
-        </thead>
-        <tbody *ngIf="eventos && eventos.length">
-            <tr *ngFor="let evento of eventosFiltrados" (click)="detalheEvento(evento.id)" style="cursor: pointer;">
-                <td class="d-none d-md-table-cell">
-                    <img [collapse]="!exibirImagem"
-                    [isAnimated]="true"
-                    [src]="'/assets/' + evento.imagemURL" alt="{{evento.tema}}" 
-                    [style.width.px]="larguraImagem"
-                    [style.margin.px]="margemImagem">
-                </td>
-                <td>{{evento.id}}</td>
-                <td>{{evento.tema}}</td>
-                <td class="d-none d-md-table-cell">{{evento.local}}</td>   
-                <td>{{evento.dataEvento | DateTimeFormat}}</td>
-                <td class="d-none d-md-table-cell">{{evento.qntPessoas}}</td>
-                <td class="d-none d-md-table-cell">{{evento.lotes[0]?.nome | uppercase}}</td>
-                <td class="text-center">
-                    <button type="button" class="btn btn-danger btn-lg" tooltip="Excluir" (click)="openModal($event, template, evento.id)">
-                        <i class="fa fa-trash icon-small ml-0"></i>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-        <tfoot *ngIf="!eventos.length">   
-            <tr><td colspan="8" class="text-center">
-                <h4>Nenhum evento encontrado!</h4>
-            </td></tr>
-        </tfoot>
+      <thead class="thead-dark">
+        <tr>
+          <th class="d-none d-md-table-cell">
+            <button type="button" class="btn btn-outline-light btn-sm" (click)="alterarImagem()">
+              <i class=" {{!exibirImagem ? 'fa fa-eye' : 'fa fa-eye-slash'}} icon-small ml-0 mr-3"></i>
+              {{!exibirImagem ? 'exibir' : 'ocultar'}}
+            </button>
+          </th>
+          <th>#</th>
+          <th>Tema</th>
+          <th class="d-none d-md-table-cell">Local</th>
+          <th>Data</th>
+          <th class="d-none d-md-table-cell">Qnt Pessoas</th>
+          <th class="d-none d-md-table-cell">Lote</th>
+          <th>Opções</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="eventos && eventos.length">
+        <tr *ngFor="let evento of eventosFiltrados" (click)="detalheEvento(evento.id)" style="cursor: pointer;">
+          <td class="d-none d-md-table-cell">
+            <img [collapse]="!exibirImagem"
+              [isAnimated]="true"
+              [src]="'/assets/' + evento.imagemURL" alt="{{evento.tema}}" 
+              [style.width.px]="larguraImagem"
+              [style.margin.px]="margemImagem">
+          </td>
+          <td>{{evento.id}}</td>
+          <td>{{evento.tema}}</td>
+          <td class="d-none d-md-table-cell">{{evento.local}}</td>   
+          <td>{{evento.dataEvento | DateTimeFormat}}</td>
+          <td class="d-none d-md-table-cell">{{evento.qntPessoas}}</td>
+          <td class="d-none d-md-table-cell">{{evento.lotes[0].nome | uppercase}}</td>
+          <td class="text-center">
+            <button type="button" class="btn btn-danger btn-lg" tooltip="Excluir" (click)="openModal($event, template, evento.id)">
+              <i class="fa fa-trash icon-small ml-0"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot *ngIf="!eventos.length">   
+        <tr><td colspan="8" class="text-center">
+          <h4>Nenhum evento encontrado!</h4>
+        </td></tr>
+      </tfoot>
     </table>
-</div>
-
-<ng-template #template>
-    <div class="modal-body text-center">
-        <p>Deseja excluir o Evento {{this.eventoId}}?</p>
-        <button type="button" class="btn btn-default" (click)="confirm()">Sim</button>
-        <button type="button" class="btn btn-primary" (click)="decline()">Não</button>
-    </div> 
-</ng-template>
+  </div>
+  
+  <!-- Modal de Confirmação -->
+  <ng-template #template>
+    <div class="modal-header">
+      <h5 class="modal-title">Confirmar Exclusão</h5>
+      <button type="button" class="close" (click)="decline()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Tem certeza que deseja excluir este evento?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="decline()">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click)="confirm()">Confirmar</button>
+    </div>
+  </ng-template>
+  
