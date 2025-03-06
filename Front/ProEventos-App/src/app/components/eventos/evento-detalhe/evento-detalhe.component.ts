@@ -22,9 +22,10 @@ defineLocale('pt-br', ptBrLocale);
 export class EventoDetalheComponent implements OnInit {
   evento = {} as Evento;
   form!: FormGroup;
+  estadoSalvar = 'post';
   isAnimated = true;
   adaptivePosition = true;
-  isLoading: boolean = false; // Adicionando a variável isLoading
+  isLoading: boolean = false;
 
   get f(): any {
     return this.form.controls;
@@ -56,18 +57,21 @@ export class EventoDetalheComponent implements OnInit {
   }
 
   public carregarEvento(): void {
-    this.isLoading = true; // Inicia o carregamento
+    this.isLoading = true;
 
     const eventoIdParam = this.router.snapshot.paramMap.get('id');
     if (eventoIdParam !== null) {
+
+      this.estadoSalvar = 'put';
+
       this.eventoService.getEventoById(+eventoIdParam).subscribe({
         next: (evento: Evento) => {
           this.evento = { ...evento };
           this.form.patchValue(this.evento);
-          this.isLoading = false; // Finaliza o carregamento
+          this.isLoading = false;
         },
         error: (error: any) => {
-          this.isLoading = false; // Finaliza o carregamento em caso de erro
+          this.isLoading = false;
           this.snackBar.open('❌ Erro ao tentar carregar eventos.', '', {
             duration: 3000,
             horizontalPosition: 'end',
@@ -78,34 +82,6 @@ export class EventoDetalheComponent implements OnInit {
       });
     } else {
       this.isLoading = false;
-    }
-  }
-
-  public salvarAlteracao(): void {
-    if (this.form.valid) {
-      this.isLoading = true; // Inicia o carregamento
-
-      const eventoAtualizado: Evento = { ...this.form.value, id: this.evento.id };
-
-      this.eventoService.postEvento(eventoAtualizado).subscribe({
-        next: () => {
-          this.snackBar.open('✅ Evento atualizado com sucesso!', '', {
-            duration: 3000,
-            horizontalPosition: 'end',
-            panelClass: ['snackbar-success'],
-          });
-          this.isLoading = false; // Finaliza o carregamento
-        },
-        error: (error: any) => {
-          this.snackBar.open('❌ Erro ao tentar salvar o evento.', '', {
-            duration: 3000,
-            horizontalPosition: 'end',
-            panelClass: ['snackbar-error'],
-          });
-          console.error(error);
-          this.isLoading = false; // Finaliza o carregamento
-        },
-      });
     }
   }
 
@@ -128,4 +104,32 @@ export class EventoDetalheComponent implements OnInit {
   public cssValidator(campoForm: FormControl): any {
     return { 'is-invalid': campoForm.errors && campoForm.touched };
   }
+
+  public salvarAlteracao(): void {
+    this.isLoading = true;
+    if (this.form.valid) {
+
+        this.evento = (this.estadoSalvar === 'post') ? 
+                      {...this.form.value} :
+                      {id: this.evento.id, ...this.form.value};
+
+        //Requisição para salvar evento no forms e não da erro 400(exigi lotes, redes sociais e palestrantes)      
+        this.evento.lotes = this.evento.lotes ?? [];
+        this.evento.palestrantesEventos = this.evento.palestrantesEventos ?? [];
+        this.evento.redesSociais = this.evento.redesSociais ?? [];
+
+        this.eventoService[this.estadoSalvar](this.evento).subscribe({
+          next: () => {
+            this.snackBar.open('✅ Evento atualizado com sucesso!', '', {
+              duration: 3000, horizontalPosition: 'end', panelClass: ['snackbar-success'],});
+          },
+          error: (error: any) => {
+            console.error('Erro de resposta da API:', error);
+            this.snackBar.open('❌ Erro ao tentar salvar o evento.', '', {
+              duration: 3000, horizontalPosition: 'end', panelClass: ['snackbar-error'],});
+          },
+        }).add(() => this.isLoading = false);
+    }
+  }
+  
 }

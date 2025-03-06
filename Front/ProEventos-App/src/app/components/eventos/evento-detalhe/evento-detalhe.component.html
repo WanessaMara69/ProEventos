@@ -1,4 +1,3 @@
-
 <!-- Formulário só aparece quando os dados forem carregados -->
 <div *ngIf="!isLoading" class="card rounded shadow-sm">
     <form [formGroup]="form">
@@ -94,7 +93,7 @@
                 </button>
 
                 <!-- Botão de salvar com indicador de carregamento -->
-                <button class="btn btn-success" [disabled]="!form.valid || isLoading" (click)="salvarAlteracao()">
+                <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarAlteracao()">
                     <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
                     <span *ngIf="!isLoading">Salvar Evento</span>
                 </button>

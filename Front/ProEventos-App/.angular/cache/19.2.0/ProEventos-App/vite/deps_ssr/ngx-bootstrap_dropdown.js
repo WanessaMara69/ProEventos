@@ -1,12 +1,12 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  ComponentLoaderFactory
-} from "./chunk-SGQR736R.js";
-import {
   AnimationBuilder,
   animate,
   style
 } from "./chunk-BD23Y72W.js";
+import {
+  ComponentLoaderFactory
+} from "./chunk-SGQR736R.js";
 import {
   NgClass
 } from "./chunk-BMOTRGRB.js";

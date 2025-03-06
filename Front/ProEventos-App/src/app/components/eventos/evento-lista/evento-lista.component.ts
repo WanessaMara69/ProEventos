@@ -106,7 +106,7 @@ export class EventoListaComponent implements OnInit {
         this.eventosFiltrados = [...this.eventos];
   
         this.snackBar.open('✅ Evento deletado com sucesso.', '', {
-          duration: 5000,
+          duration: 3000,
           horizontalPosition: 'end',
           panelClass: ['snackbar-success']
         });
@@ -114,7 +114,7 @@ export class EventoListaComponent implements OnInit {
       error: (error) => {
         console.error(error);
         this.snackBar.open(`❌ Erro ao tentar deletar o evento: ${error.message}`, '', {
-          duration: 5000,
+          duration: 3000,
           horizontalPosition: 'end',
           panelClass: ['snackbar-error']
         });
